@@ -11,7 +11,11 @@ resource "aws_instance" "my_webserver" {
 	ami = "ami-0a6dc7529cd559185"
 	instance_type = "t2.micro"
 	vpc_security_group_ids = [aws_security_group.my_webserver.id]
-	user_data = file("userData.sh")
+	user_data = templatefile("userData.sh.tpl", {
+		f_name = "Vladimir",
+		l_name = "Kutiavin",
+		numbers = ["first", "second", "third"]
+	})
 }
 
 resource "aws_security_group" "my_webserver" {
